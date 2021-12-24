@@ -9,6 +9,7 @@ class Game:
     def place(self, x, y):
         if self.board[y][x] == 0:
             self.board[y][x] = self.turn
+            self.winner(self.turn)
             return True
         else:
             print("Invalid Move Choice, Try Again!")
@@ -17,7 +18,46 @@ class Game:
     def nextTurn(self):
         self.turn = self.turn % 2 + 1
 
-    def winner(self):
+    def winner(self, player):
+        # horizontal check
+        for x in range(len(self.board) - 4) :
+            for y in range(len(self.board)):
+                if (self.board[y][x] == player and self.board[y][x + 1] == player and self.board[y][x + 2] == player
+                and self.board[y][x + 3] == player and self.board[y][x + 4] == player) :
+                
+                    self.gameOver = True
+                    return True
+
+
+        # vertical check
+        for y in range(len(self.board) - 4) :
+            for x in range(len(self.board)):
+                if (self.board[y][x] == player and self.board[y + 1][x] == player and self.board[y + 2][x] == player
+                and self.board[y + 3][x] == player and self.board[y + 4][x] == player) :
+                
+                    self.gameOver = True
+                    return True
+
+        # ascending diagonal check
+        for y in range(4, len(self.board)) :
+            for x in range(len(self.board) - 4):
+                if (self.board[y][x] == player and self.board[y - 1][x + 1] == player and self.board[y - 2][x + 2] == player
+                and self.board[y - 3][x + 3] == player and self.board[y - 4][x + 4] == player) :
+                
+                    self.gameOver = True
+                    return True
+
+
+        # descending diagonal check
+        for y in range(4, len(self.board)) :
+            for x in range(4, len(self.board)):
+                if (self.board[y][x] == player and self.board[y - 1][x - 1] == player and self.board[y - 2][x - 2] == player
+                and self.board[y - 3][x - 3] == player and self.board[y - 4][x - 4] == player) :
+
+                    self.gameOver = True
+                    return True
+
+
         return False
 
     def __str__(self):
