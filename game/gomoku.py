@@ -8,7 +8,13 @@ class Game:
         self.won = 0
     
     def place(self, x, y):
-        if self.board[y][x] == 0 and x < 15 and y < 15 and x >= 0 and y >= 0:
+        try:
+            x = int(x)
+            y = int(y)
+        except ValueError:
+            print("Bad Input Value, Try Again!")
+            return False
+        if x < 15 and y < 15 and x >= 0 and y >= 0 and self.board[y][x] == 0:
             self.board[y][x] = self.turn
             self.winner(self.turn)
             return True
@@ -90,8 +96,8 @@ def play():
 
         valid = False
         while not valid:
-            x = int(input("Input X Coor:"))
-            y = int(input("Input Y Coor:"))
+            x = input("Input X Coor:")
+            y = input("Input Y Coor:")
             valid = game.place(x, y)
         print(game)
         game.nextTurn()
