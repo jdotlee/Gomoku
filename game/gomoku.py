@@ -1,3 +1,4 @@
+
 class Game:
     SIZE = 15
     def __init__(self):
@@ -7,7 +8,7 @@ class Game:
         self.won = 0
     
     def place(self, x, y):
-        if self.board[y][x] == 0:
+        if self.board[y][x] == 0 and x < 15 and y < 15 and x >= 0 and y >= 0:
             self.board[y][x] = self.turn
             self.winner(self.turn)
             return True
@@ -36,6 +37,7 @@ class Game:
                 and self.board[y + 3][x] == player and self.board[y + 4][x] == player) :
                 
                     self.gameOver = True
+                    self.won = player
                     return True
 
         # ascending diagonal check
@@ -45,6 +47,7 @@ class Game:
                 and self.board[y - 3][x + 3] == player and self.board[y - 4][x + 4] == player) :
                 
                     self.gameOver = True
+                    self.won = player
                     return True
 
 
@@ -55,9 +58,8 @@ class Game:
                 and self.board[y - 3][x - 3] == player and self.board[y - 4][x - 4] == player) :
 
                     self.gameOver = True
+                    self.won = player
                     return True
-
-
         return False
 
     def __str__(self):
@@ -77,20 +79,24 @@ class Game:
             
         return "     0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  \n" + toReturn + "\n   -------------------------------------------------------------\n"
 
-
-game = Game()
-print(game)
-while not game.gameOver:
-    if game.turn == 1:
-        print("Black's Turn")
-    else:
-        print("White's Turn")
-
-    valid = False
-    while not valid:
-        x = int(input("Input X Coor:"))
-        y = int(input("Input Y Coor:"))
-        valid = game.place(x, y)
+def play():
+    game = Game()
     print(game)
-    game.nextTurn()
+    while not game.gameOver:
+        if game.turn == 1:
+            print("Black's Turn")
+        else:
+            print("White's Turn")
+
+        valid = False
+        while not valid:
+            x = int(input("Input X Coor:"))
+            y = int(input("Input Y Coor:"))
+            valid = game.place(x, y)
+        print(game)
+        game.nextTurn()
+    if game.won == 1:
+        print("Black Wins!!!")
+    else:
+        print("White Wins!!!")
 
