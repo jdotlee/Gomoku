@@ -1,0 +1,3 @@
+import gomoku
+
+gomoku.play()
